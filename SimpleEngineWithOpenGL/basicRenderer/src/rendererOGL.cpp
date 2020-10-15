@@ -54,7 +54,6 @@ bool RendererOGL::initialize(Window& windowP)
 	}
 
 
-	Assets::loadShader("../res/shaders/basic.vert", "../res/shaders/basic.frag", "", "", "", "basic");
 	vertexArray = new VertexArray(vertices, 4, indices, 6);
 	shader = &Assets::getShader("basic");
 	return true;

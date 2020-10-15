@@ -2,6 +2,8 @@
 #include "log.h"
 #include "assets.h"
 #include "spriteComponent.h"
+#include "texture.h"
+#include "backgroundSpriteComponent.h"
 #include <string>
 
 bool Game::initialize()
@@ -158,7 +160,16 @@ void Game::render()
 
 void Game::load()
 {
-	//Assets::loadShader("../res/shaders/basic.vert", "../res/shaders/basic.frag", "", "", "", "basic");
+	Assets::loadTexture(renderer, "Res\\Farback01.png", "Farback01");
+	Assets::loadTexture(renderer, "Res\\Farback02.png", "Farback02");
+	Assets::loadShader("../res/shaders/basic.vert", "../res/shaders/basic.frag", "", "", "", "basic");
+
+	std::vector<Texture*> bgTexsFar{
+		&Assets::getTexture("Farback01"),
+		&Assets::getTexture("Farback02")
+	};
+	Actor* bgFar = new Actor();
+	BackgroundSpriteComponent* bgSpritesFar = new BackgroundSpriteComponent(bgFar, bgTexsFar);
 }
 
 void Game::unload()

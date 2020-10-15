@@ -6,7 +6,7 @@ std::map<std::string, Texture> Assets::textures;
 std::map<std::string, Shader> Assets::shaders;
 
 // Query the texture loading to the renderer and add it to the texture map
-Texture Assets::loadTexture(RendererSDL& renderer, const std::string fileName, const std::string& name)
+Texture Assets::loadTexture(IRenderer& renderer, const std::string fileName, const std::string& name)
 {
 	textures[name] = loadTextureFromFile(renderer, fileName.c_str());
 	return textures[name];
@@ -58,11 +58,15 @@ void Assets::clear()
 }
 
 // Create a texture and link it to the renderer
-Texture Assets::loadTextureFromFile(RendererSDL& renderer, const std::string& fileName)
+Texture Assets::loadTextureFromFile(IRenderer& renderer, const std::string& fileName)
 {
-	Texture texture;
-	texture.load(renderer, fileName);
-	return texture;
+    Texture texture;
+    // Not very elegant, but simpler architecture
+    if (renderer.type() == IRenderer::Type::SDL)
+    {
+        texture.loadSDL(dynamic_cast<RendererSDL&>(renderer), fileName);
+    }
+    return texture;
 }
 
 Shader Assets::loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile, const std::string& tcShaderFile, const std::string& teShaderFile, const std::string& gShaderFile)
