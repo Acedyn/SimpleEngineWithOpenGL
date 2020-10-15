@@ -1,6 +1,6 @@
 #pragma once
 #include "window.h"
-#include "renderer.h"
+#include "RendererSDL.h"
 #include "vector2.h"
 #include "actor.h"
 #include "timer.h"
@@ -35,7 +35,7 @@ public:
 	void unload();
 	void close();
 
-	Renderer& getRenderer() { return renderer; }
+	RendererSDL& getRenderer() { return renderer; }
 	void addActor(Actor* actor);
 	void removeActor(Actor* actor);
 
@@ -45,7 +45,7 @@ private:
 	void render();
 
 	Window window;
-	Renderer renderer;
+	RendererSDL renderer;
 	bool isRunning;
 
 	bool isUpdatingActors;

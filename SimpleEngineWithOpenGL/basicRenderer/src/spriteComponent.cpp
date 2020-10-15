@@ -25,8 +25,8 @@ void SpriteComponent::setTexture(const Texture& textureP)
 }
 
 // Query drawing this sprite to the renderer
-void SpriteComponent::draw(Renderer& renderer)
+void SpriteComponent::draw(RendererSDL& renderer)
 {
 	Vector2 origin{ texWidth / 2.0f, texHeight / 2.0f };
-	renderer.drawSprite(owner, texture, Rectangle::nullRect, origin, Renderer::Flip::None);
+	renderer.drawSprite(owner, texture, Rectangle::nullRect, origin, RendererSDL::Flip::None);
 }

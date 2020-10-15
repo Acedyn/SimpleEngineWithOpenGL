@@ -1,5 +1,5 @@
 #pragma once
-#include "renderer.h"
+#include "rendererSDL.h"
 #include <string>
 
 class Texture
@@ -9,7 +9,7 @@ public:
 	~Texture();
 
 	void unload();
-	bool load(Renderer& rendererP, const std::string& fileNameP);
+	bool load(RendererSDL& rendererP, const std::string& fileNameP);
 	inline SDL_Texture* toSDLTexture() const { return SDLTexture; }
 	void updateInfo(int& widthOut, int& heightOut);
 

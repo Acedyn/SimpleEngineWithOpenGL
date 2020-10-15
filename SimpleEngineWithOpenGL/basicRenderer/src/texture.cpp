@@ -19,7 +19,7 @@ void Texture::unload()
 }
 
 // Create the SDL_Surface and create a texture from it to the renderer
-bool Texture::load(Renderer& rendererP, const std::string& fileNameP)
+bool Texture::load(RendererSDL& rendererP, const std::string& fileNameP)
 {
 	fileName = fileNameP;
 	SDL_Surface* surf = IMG_Load(fileName.c_str());

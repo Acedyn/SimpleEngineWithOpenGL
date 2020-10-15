@@ -12,7 +12,7 @@ public:
 	SpriteComponent& operator=(const SpriteComponent&) = delete;
 
 	virtual void setTexture(const Texture& textureP);
-	virtual void draw(Renderer& renderer);
+	virtual void draw(RendererSDL& renderer);
 
 	int getDrawOrder() const { return drawOrder; }
 	int getTexWidth() const { return texWidth; }

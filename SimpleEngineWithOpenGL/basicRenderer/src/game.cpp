@@ -28,7 +28,7 @@ void Game::loop()
 
 	while (isRunning)
 	{
-		dt = timer.computeDeltaTime();
+		dt = static_cast<float>(timer.computeDeltaTime());
 		processInput();
 		update(dt);
 		render();

@@ -1,16 +1,16 @@
-#include "renderer.h"
+#include "rendererSDL.h"
 #include "log.h"
 #include "texture.h"
 #include "maths.h"
 #include "spriteComponent.h"
 #include <SDL_image.h>
 
-Renderer::Renderer() : SDLRenderer(nullptr)
+RendererSDL::RendererSDL() : SDLRenderer(nullptr)
 {
 
 }
 
-bool Renderer::initialize(Window& window)
+bool RendererSDL::initialize(Window& window)
 {
 	SDLRenderer = SDL_CreateRenderer(window.getSDLWindow(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!SDLRenderer)
@@ -26,36 +26,36 @@ bool Renderer::initialize(Window& window)
 	return true;
 }
 
-void Renderer::beginDraw()
+void RendererSDL::beginDraw()
 {
 	SDL_SetRenderDrawColor(SDLRenderer, 5, 15, 30, 255);
 	SDL_RenderClear(SDLRenderer);
 }
 
-void Renderer::endDraw()
+void RendererSDL::endDraw()
 {
 	SDL_RenderPresent(SDLRenderer);
 }
 
-void Renderer::draw()
+void RendererSDL::draw()
 {
 	drawSprites();
 }
 
-void Renderer::drawRect(const Rectangle& rect) const
+void RendererSDL::drawRect(const Rectangle& rect) const
 {
 	SDL_SetRenderDrawColor(SDLRenderer, 0, 255, 0, 255);
 	SDL_Rect SDLRect = rect.toSDLRect();
 	SDL_RenderFillRect(SDLRenderer, &SDLRect);
 }
 
-void Renderer::close()
+void RendererSDL::close()
 {
 	SDL_DestroyRenderer(SDLRenderer);
 }
 
 // Query for drawing all the sprites of the sprite array
-void Renderer::drawSprites()
+void RendererSDL::drawSprites()
 {
 	for (auto sprite : sprites)
 	{
@@ -64,7 +64,7 @@ void Renderer::drawSprites()
 }
 
 // Draw the given srite
-void Renderer::drawSprite(const Actor& actor, const class Texture& texture, Rectangle srcRect, Vector2 origin, Flip flip) const
+void RendererSDL::drawSprite(const Actor& actor, const class Texture& texture, Rectangle srcRect, Vector2 origin, Flip flip) const
 {
 	// Create an SDL_rect and get the actor's transfrom
 	SDL_Rect dstRect;
@@ -100,7 +100,7 @@ void Renderer::drawSprite(const Actor& actor, const class Texture& texture, Rect
 		SDL_FLIP_NONE);
 }
 
-void Renderer::addSprite(SpriteComponent* sprite)
+void RendererSDL::addSprite(SpriteComponent* sprite)
 {
 	int spriteDrawOrder = sprite->getDrawOrder();
 	auto iter = std::begin(sprites);
@@ -114,7 +114,7 @@ void Renderer::addSprite(SpriteComponent* sprite)
 	sprites.insert(iter, sprite);
 }
 
-void Renderer::removeSprite(SpriteComponent* sprite)
+void RendererSDL::removeSprite(SpriteComponent* sprite)
 {
 	auto iter = std::find(std::begin(sprites), std::end(sprites), sprite);
 	sprites.erase(iter);
