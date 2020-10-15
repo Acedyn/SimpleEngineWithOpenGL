@@ -8,6 +8,7 @@ bool Game::initialize()
 {
 	//Create the window
 	bool isWindowInit = window.initialise();
+
 	//Start the renderer
 	bool isRendererInit = renderer.initialize(window);
 
@@ -157,7 +158,7 @@ void Game::render()
 
 void Game::load()
 {
-	Assets::loadShader("../res/shaders/basic.vert", "../res/shaders/basic.frag", "", "", "", "basic");
+	//Assets::loadShader("../res/shaders/basic.vert", "../res/shaders/basic.frag", "", "", "", "basic");
 }
 
 void Game::unload()
