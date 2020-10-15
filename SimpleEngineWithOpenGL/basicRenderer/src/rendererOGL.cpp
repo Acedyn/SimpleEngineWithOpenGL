@@ -8,10 +8,10 @@
 
 #include <SDL_image.h>
 
-RendererOGL::RendererOGL() : 
-	window(nullptr), 
-	vertexArray(nullptr), 
-	context(nullptr), 
+RendererOGL::RendererOGL() :
+	window(nullptr),
+	vertexArray(nullptr),
+	context(nullptr),
 	shader(nullptr) {}
 
 RendererOGL::~RendererOGL()

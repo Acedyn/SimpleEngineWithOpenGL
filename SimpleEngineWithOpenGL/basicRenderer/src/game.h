@@ -1,17 +1,16 @@
 #pragma once
-#include "window.h"
-#include "RendererSDL.h"
-#include "rendererOGL.h"
-#include "vector2.h"
-#include "actor.h"
-#include "timer.h"
-#include "spriteComponent.h"
 #include <vector>
+#include "Actor.h"
+#include "SpriteComponent.h"
+#include "Window.h"
+#include "Vector2.h"
+#include "RendererOGL.h"
+
+using std::vector;
 
 class Game
 {
 public:
-	// Singleton function to create the game
 	static Game& instance()
 	{
 		static Game inst;
@@ -24,10 +23,7 @@ public:
 	Game& operator=(Game&&) = delete;
 
 private:
-	Game() :
-		isRunning(true),
-		isUpdatingActors(false)
-	{};
+	Game() : isRunning(true), isUpdatingActors(false) {}
 
 public:
 	bool initialize();
@@ -36,22 +32,24 @@ public:
 	void unload();
 	void close();
 
-	RendererOGL& getRenderer() { return renderer; }
 	void addActor(Actor* actor);
 	void removeActor(Actor* actor);
+
+	RendererOGL& getRenderer() { return renderer; }
+
 
 private:
 	void processInput();
 	void update(float dt);
 	void render();
 
+	bool isRunning;
 	Window window;
 	RendererOGL renderer;
-	bool isRunning;
 
 	bool isUpdatingActors;
-	std::vector<Actor*>  actors;
-	std::vector<Actor*> pendingActors;
-
+	vector<Actor*> actors;
+	vector<Actor*> pendingActors;
 
 };
+

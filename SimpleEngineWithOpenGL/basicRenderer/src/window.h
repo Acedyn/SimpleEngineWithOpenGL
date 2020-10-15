@@ -12,7 +12,7 @@ public:
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
 
-	bool initialise();
+	bool initialize();
 	void close();
 
 	SDL_Window* getSDLWindow() const { return SDLWindow; }
