@@ -2,6 +2,7 @@
 #include "iRenderer.h"
 #include "vertexArray.h"
 #include "vector2.h"
+#include "shader.h"
 
 #include <vector>
 
@@ -27,6 +28,7 @@ public:
 
 private:
 	void drawSprites();
+	Shader* shader;
 
 	Window* window;
 	VertexArray* vertexArray;
