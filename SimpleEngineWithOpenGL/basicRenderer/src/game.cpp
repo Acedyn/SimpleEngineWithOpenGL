@@ -157,7 +157,7 @@ void Game::render()
 
 void Game::load()
 {
-	
+	Assets::loadShader("../res/shaders/basic.vert", "../res/shaders/basic.frag", "", "", "", "basic");
 }
 
 void Game::unload()

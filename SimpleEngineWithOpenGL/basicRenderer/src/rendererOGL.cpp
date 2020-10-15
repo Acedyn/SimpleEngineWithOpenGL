@@ -56,7 +56,7 @@ bool RendererOGL::initialize(Window& windowP)
 
 void RendererOGL::beginDraw()
 {
-	glClearColor(0.45f, 0.45f, 1.0f, 1.0f);
+	glClearColor(0.03f, 0.05f, 0.1f, 1.0f);
 	// Clear the color buffer
 	glClear(GL_COLOR_BUFFER_BIT);
 	// Enable alpha blending on the color buffer
