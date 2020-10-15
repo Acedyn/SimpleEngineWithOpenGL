@@ -13,7 +13,7 @@ bool Window::initialise()
 		Log::error(LogCategory::Video, "Unable to initialize SDL");
 		return false;
 	}
-	SDLWindow = SDL_CreateWindow("2D Shooter", 100, 100, width, height, 0);
+	SDLWindow = SDL_CreateWindow("2D Shooter", 100, 100, width, height, SDL_WINDOW_OPENGL);
 	if (!SDLWindow)
 	{
 		Log::error(LogCategory::System, "Failed to create window");
