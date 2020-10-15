@@ -1,6 +1,6 @@
 #pragma once
-#include "Window.h"
-#include "Vector2.h"
+#include "window.h"
+#include "vector2.h"
 
 class IRenderer
 {
@@ -23,5 +23,5 @@ public:
 	virtual void close() = 0;
 	virtual IRenderer::Type type() = 0;
 
-	//virtual void drawSprite(const Actor& actor, const class Texture& texture, Rectangle srcRect, Vector2 origin, Flip flip) const = 0;
+	virtual void drawSprite(const class Actor&, const class Texture& tex, struct Rectangle srcRect, Vector2 origin, Flip flip) const = 0;
 };

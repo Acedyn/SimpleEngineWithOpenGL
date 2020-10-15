@@ -152,6 +152,7 @@
     <ClCompile Include="src\log.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\rectangle.cpp" />
+    <ClCompile Include="src\rendererOGL.cpp" />
     <ClCompile Include="src\rendererSDL.cpp" />
     <ClCompile Include="src\spriteComponent.cpp" />
     <ClCompile Include="src\texture.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="src\log.h" />
     <ClInclude Include="src\maths.h" />
     <ClInclude Include="src\rectangle.h" />
+    <ClInclude Include="src\rendererOGL.h" />
     <ClInclude Include="src\rendererSDL.h" />
     <ClInclude Include="src\spriteComponent.h" />
     <ClInclude Include="src\texture.h" />

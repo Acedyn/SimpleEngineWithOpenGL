@@ -30,10 +30,10 @@ public:
 	void addSprite(class SpriteComponent* sprite);
 	void removeSprite(class SpriteComponent* sprite);
 	void drawSprites();
-	void drawSprite(const Actor& actor, const class Texture& texture, Rectangle srcRect, Vector2 origin, Flip flip) const;
+	void drawSprite(const Actor& actor, const class Texture& tex, Rectangle srcRect, Vector2 origin, Flip flip) const;
 
 	inline SDL_Renderer* toSDLRenderer() const { return SDLRenderer; }
-	IRenderer::Type type() { return IRenderer::Type::SDL; }
+	IRenderer::Type type() override { return IRenderer::Type::SDL; }
 
 private:
 	SDL_Renderer* SDLRenderer = nullptr;
