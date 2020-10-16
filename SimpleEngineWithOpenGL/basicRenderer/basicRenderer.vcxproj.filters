@@ -145,5 +145,11 @@
     <None Include="..\res\shaders\transform.vert">
       <Filter>Fichiers de ressources</Filter>
     </None>
+    <None Include="..\res\shaders\sprite.vert">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\res\shaders\sprite.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
   </ItemGroup>
 </Project>

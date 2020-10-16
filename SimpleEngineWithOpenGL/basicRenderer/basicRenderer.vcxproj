@@ -190,6 +190,8 @@
   <ItemGroup>
     <None Include="..\res\shaders\basic.frag" />
     <None Include="..\res\shaders\basic.vert" />
+    <None Include="..\res\shaders\sprite.frag" />
+    <None Include="..\res\shaders\sprite.vert" />
     <None Include="..\res\shaders\transform.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

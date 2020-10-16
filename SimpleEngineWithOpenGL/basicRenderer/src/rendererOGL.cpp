@@ -57,7 +57,7 @@ bool RendererOGL::initialize(Window& windowP)
 
 
 	vertexArray = new VertexArray(vertices, 4, indices, 6);
-	shader = &Assets::getShader("transform");
+	shader = &Assets::getShader("sprite");
 	return true;
 }
 

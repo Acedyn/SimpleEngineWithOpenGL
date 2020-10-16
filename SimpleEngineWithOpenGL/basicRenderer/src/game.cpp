@@ -19,8 +19,7 @@ void Game::load()
 
 	Assets::loadShader("..\\res\\shaders\\basic.vert", "..\\res\\shaders\\basic.frag", "", "", "", "Basic");
 	Assets::loadShader("..\\res\\shaders\\transform.vert", "..\\res\\shaders\\basic.frag", "", "", "", "transform");
-
-
+	Assets::loadShader("..\\res\\shaders\\sprite.vert", "..\\res\\shaders\\sprite.frag", "", "", "", "sprite");
 
 	Ship* ship = new Ship();
 	ship->setPosition(Vector2{ 100, 300 });
