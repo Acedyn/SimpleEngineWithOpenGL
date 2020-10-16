@@ -15,7 +15,7 @@ bool Game::initialize()
 void Game::load()
 {
 
-	Assets::loadTexture(renderer, "..\\res\\textures\\HealphBar.png", "healthBar");
+	Assets::loadTexture(renderer, "..\\res\\textures\\HealthBar.png", "healthBar");
 	Assets::loadShader("..\\res\\shaders\\sprite.vert", "..\\res\\shaders\\sprite.frag", "", "", "", "sprite");
 
 	Actor* ui = new Actor();

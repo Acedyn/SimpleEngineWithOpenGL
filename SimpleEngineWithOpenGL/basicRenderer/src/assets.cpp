@@ -60,13 +60,9 @@ void Assets::clear()
 // Create a texture and link it to the renderer
 Texture Assets::loadTextureFromFile(IRenderer& renderer, const std::string& fileName)
 {
-    Texture texture;
-    // Not very elegant, but simpler architecture
-    if (renderer.type() == IRenderer::Type::SDL)
-    {
-        texture.loadSDL(dynamic_cast<RendererSDL&>(renderer), fileName);
-    }
-    else if (renderer.type() == IRenderer::Type::OGL)
+    Texture texture; 
+    
+    if (renderer.type() == IRenderer::Type::OGL)
     {
         texture.loadOGL(dynamic_cast<RendererOGL&>(renderer), fileName);
     }

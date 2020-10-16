@@ -155,7 +155,6 @@
     <ClCompile Include="src\quaternion.cpp" />
     <ClCompile Include="src\rectangle.cpp" />
     <ClCompile Include="src\rendererOGL.cpp" />
-    <ClCompile Include="src\rendererSDL.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\ship.cpp" />
     <ClCompile Include="src\spriteComponent.cpp" />
@@ -178,7 +177,6 @@
     <ClInclude Include="src\quaternion.h" />
     <ClInclude Include="src\rectangle.h" />
     <ClInclude Include="src\rendererOGL.h" />
-    <ClInclude Include="src\rendererSDL.h" />
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\ship.h" />
     <ClInclude Include="src\spriteComponent.h" />

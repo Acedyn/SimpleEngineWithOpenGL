@@ -86,8 +86,8 @@ void RendererOGL::drawSprite(const Actor& actor, const class Texture& tex, Recta
 {
 	Matrix4 scaleMat = Matrix4::createScale(static_cast<float>(tex.getWidth()), static_cast<float>(tex.getHeight()), 1.0f);
 	Matrix4 world = scaleMat * actor.getWorldTransform();
-	Matrix4 pixelTranslation = Matrix4::createTranslation(Vector3(-WINDOW_WIDTH / 2 - origin.x, -WINDOW_HEIGHT / 2 - origin.y, 0.0f));
-	Assets::getShader("sprite").setMatrix4("uWorldTransform", world * pixelTranslation);
+	//Matrix4 pixelTranslation = Matrix4::createTranslation(Vector3(-WINDOW_WIDTH / 2 - origin.x, -WINDOW_HEIGHT / 2 - origin.y, 0.0f));
+	Assets::getShader("sprite").setMatrix4("uWorldTransform", world /** pixelTranslation*/);
 	tex.setActive();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
