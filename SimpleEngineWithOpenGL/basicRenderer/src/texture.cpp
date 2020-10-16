@@ -35,7 +35,11 @@ bool Texture::loadOGL(RendererOGL& rendererP, const std::string& fileNameP)
 	height = surf->h;
 
 	int format = 0;
-	if (surf->format->format == SDL_PIXELFORMAT_RGBA32)
+	if (surf->format->format == SDL_PIXELFORMAT_RGB24)
+	{
+		format = GL_RGB;
+	}
+	else if (surf->format->format == SDL_PIXELFORMAT_RGBA32)
 	{
 		format = GL_RGBA;
 	}

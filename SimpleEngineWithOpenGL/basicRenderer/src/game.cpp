@@ -4,7 +4,6 @@
 #include "meshComponent.h"
 #include "Timer.h"
 #include "Assets.h"
-#include "ship.h"
 
 bool Game::initialize()
 {

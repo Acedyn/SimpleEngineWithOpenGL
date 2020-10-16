@@ -33,8 +33,6 @@ private:
 	void drawSprites();
 	void drawMeshes();
 
-	Shader* shader;
-
 
 	Window* window;
 	VertexArray* spriteVertexArray;

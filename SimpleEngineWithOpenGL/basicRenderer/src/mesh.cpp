@@ -36,7 +36,7 @@ void Mesh::setVertexArray(VertexArray* vertexArrayP)
 	vertexArray = vertexArrayP;
 }
 
-void Mesh::setShaderName(std::string& shaderNameP)
+void Mesh::setShaderName(const std::string& shaderNameP)
 {
 	shaderName = shaderNameP;
 }

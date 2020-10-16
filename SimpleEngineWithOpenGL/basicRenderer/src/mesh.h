@@ -19,7 +19,7 @@ public:
 	Texture* getTexture(int index);
 
 	void setVertexArray(VertexArray* vertexArrayP);
-	void setShaderName(std::string& shaderNameP);
+	void setShaderName(const std::string& shaderNameP);
 	void setRadius(float radiusP);
 
 private:
