@@ -14,19 +14,19 @@ bool Game::initialize()
 
 void Game::load()
 {
-	Assets::loadShader("Res\\Shaders\\Sprite.vert", "Res\\Shaders\\Sprite.frag", "", "", "", "Sprite");
-	Assets::loadShader("Res\\Shaders\\BasicMesh.vert", "Res\\Shaders\\BasicMesh.frag", "", "", "", "BasicMesh");
+	Assets::loadShader("../res/shaders/Sprite.vert", "../res/shaders/Sprite.frag", "", "", "", "Sprite");
+	Assets::loadShader("../res/shaders/BasicMesh.vert", "../res/shaders/BasicMesh.frag", "", "", "", "BasicMesh");
 
-	Assets::loadTexture(renderer, "Res\\Textures\\Default.png", "Default");
-	Assets::loadTexture(renderer, "Res\\Textures\\Cube.png", "Cube");
-	Assets::loadTexture(renderer, "Res\\Textures\\HealthBar.png", "HealthBar");
-	Assets::loadTexture(renderer, "Res\\Textures\\Plane.png", "Plane");
-	Assets::loadTexture(renderer, "Res\\Textures\\Radar.png", "Radar");
-	Assets::loadTexture(renderer, "Res\\Textures\\Sphere.png", "Sphere");
+	Assets::loadTexture(renderer, "../res/textures/Default.png", "Default");
+	Assets::loadTexture(renderer, "../res/textures/Cube.png", "Cube");
+	Assets::loadTexture(renderer, "../res/textures/HealthBar.png", "HealthBar");
+	Assets::loadTexture(renderer, "../res/textures/Plane.png", "Plane");
+	Assets::loadTexture(renderer, "../res/textures/Radar.png", "Radar");
+	Assets::loadTexture(renderer, "../res/textures/Sphere.png", "Sphere");
 
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube");
-	Assets::loadMesh("Res\\Meshes\\Plane.gpmesh", "Mesh_Plane");
-	Assets::loadMesh("Res\\Meshes\\Sphere.gpmesh", "Mesh_Sphere");
+	Assets::loadMesh("../res/meshes/Cube.gpmesh", "Mesh_Cube");
+	Assets::loadMesh("../res/meshes/Plane.gpmesh", "Mesh_Plane");
+	Assets::loadMesh("../res/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
 	camera = new Camera();
 
