@@ -199,7 +199,7 @@ Mesh Assets::loadMeshFromFile(const std::string& fileName)
     //mesh.setShaderName(doc["shader"].GetString());
     //////////////////////////////////////////////////THIS IS TEMPORARY/////////////////////////////////////////////////////////////////////
     // TEMPORARY REPLACEMENT
-    std::string shaderNameTemp = "basicShader";
+    std::string shaderNameTemp = "BasicMesh";
     mesh.setShaderName(shaderNameTemp);
     // TEMPORARY REPLACEMENT
 

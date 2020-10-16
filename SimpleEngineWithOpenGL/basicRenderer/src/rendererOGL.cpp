@@ -139,11 +139,11 @@ void RendererOGL::drawMeshes()
 {
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
-	Assets::getShader("basicMesh").use();
-	Assets::getShader("basicMesh").setMatrix4("uViewProj", view * projection);
+	Assets::getShader("BasicMesh").use();
+	Assets::getShader("BasicMesh").setMatrix4("uViewProj", view * projection);
 	for (auto mc : meshes)
 	{
-		mc->draw(Assets::getShader("basicMesh"));
+		mc->draw(Assets::getShader("BasicMesh"));
 	}
 }
 

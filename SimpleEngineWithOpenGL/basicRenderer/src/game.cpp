@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Actor.h"
 #include "SpriteComponent.h"
+#include "meshComponent.h"
 #include "Timer.h"
 #include "Assets.h"
 #include "ship.h"
@@ -14,13 +15,36 @@ bool Game::initialize()
 
 void Game::load()
 {
+	Assets::loadShader("Res\\Shaders\\Sprite.vert", "Res\\Shaders\\Sprite.frag", "", "", "", "Sprite");
+	Assets::loadShader("Res\\Shaders\\BasicMesh.vert", "Res\\Shaders\\BasicMesh.frag", "", "", "", "BasicMesh");
 
-	Assets::loadTexture(renderer, "..\\res\\textures\\HealthBar.png", "healthBar");
-	Assets::loadShader("..\\res\\shaders\\sprite.vert", "..\\res\\shaders\\sprite.frag", "", "", "", "sprite");
+	Assets::loadTexture(renderer, "Res\\Textures\\Default.png", "Default");
+	Assets::loadTexture(renderer, "Res\\Textures\\Cube.png", "Cube");
+	Assets::loadTexture(renderer, "Res\\Textures\\HealthBar.png", "HealthBar");
+	Assets::loadTexture(renderer, "Res\\Textures\\Plane.png", "Plane");
+	Assets::loadTexture(renderer, "Res\\Textures\\Radar.png", "Radar");
+	Assets::loadTexture(renderer, "Res\\Textures\\Sphere.png", "Sphere");
 
-	Actor* ui = new Actor();
-	ui->setPosition(Vector3(350.0f, 350.0f, 0.0f));
-	SpriteComponent* sc = new SpriteComponent(ui, Assets::getTexture("healthBar"));
+	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube");
+	Assets::loadMesh("Res\\Meshes\\Plane.gpmesh", "Mesh_Plane");
+	Assets::loadMesh("Res\\Meshes\\Sphere.gpmesh", "Mesh_Sphere");
+
+	camera = new Camera();
+
+	Actor* a = new Actor();
+	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
+	a->setScale(100.0f);
+	Quaternion q(Vector3::unitY, -Maths::piOver2);
+	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
+	a->setRotation(q);
+	MeshComponent* mc = new MeshComponent(a);
+	mc->setMesh(Assets::getMesh("Mesh_Cube"));
+
+	Actor* b = new Actor();
+	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
+	b->setScale(3.0f);
+	MeshComponent* mcb = new MeshComponent(b);
+	mcb->setMesh(Assets::getMesh("Mesh_Sphere"));
 }
 
 void Game::processInput()
