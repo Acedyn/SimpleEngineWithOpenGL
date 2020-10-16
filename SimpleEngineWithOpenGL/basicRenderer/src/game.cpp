@@ -3,7 +3,7 @@
 #include "SpriteComponent.h"
 #include "Timer.h"
 #include "Assets.h"
-#include "BackgroundSpriteComponent.h"
+#include "ship.h"
 
 bool Game::initialize()
 {
@@ -14,20 +14,16 @@ bool Game::initialize()
 
 void Game::load()
 {
-	Assets::loadTexture(renderer, "res\\Farback01.png", "Farback01");
-	Assets::loadTexture(renderer, "res\\Farback02.png", "Farback02");
 
-	Assets::loadShader("res\\shaders\\basic.vert", "res\\shaders\\basic.frag", "", "", "", "basic");
+	Assets::loadTexture(renderer, "..\\res\\textures\\Ship.png", "ship");
 
-	// Background
-	// Create the "far back" background
-	vector<Texture*> bgTexsFar {
-		&Assets::getTexture("Farback01"),
-		&Assets::getTexture("Farback02")
-	};
-	Actor* bgFar = new Actor();
-	BackgroundSpriteComponent* bgSpritesFar = new BackgroundSpriteComponent(bgFar, bgTexsFar);
+	Assets::loadShader("..\\res\\shaders\\basic.vert", "..\\res\\shaders\\basic.frag", "", "", "", "Basic");
+	Assets::loadShader("..\\res\\shaders\\transform.vert", "..\\res\\shaders\\basic.frag", "", "", "", "transform");
 
+
+
+	Ship* ship = new Ship();
+	ship->setPosition(Vector2{ 100, 300 });
 	
 }
 

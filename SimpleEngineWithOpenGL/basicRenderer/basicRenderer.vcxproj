@@ -147,7 +147,6 @@
   <ItemGroup>
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\assets.cpp" />
-    <ClCompile Include="src\backgroundSpriteComponent.cpp" />
     <ClCompile Include="src\component.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\log.cpp" />
@@ -157,6 +156,7 @@
     <ClCompile Include="src\rendererOGL.cpp" />
     <ClCompile Include="src\rendererSDL.cpp" />
     <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\ship.cpp" />
     <ClCompile Include="src\spriteComponent.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\timer.cpp" />
@@ -168,7 +168,6 @@
   <ItemGroup>
     <ClInclude Include="src\actor.h" />
     <ClInclude Include="src\assets.h" />
-    <ClInclude Include="src\backgroundSpriteComponent.h" />
     <ClInclude Include="src\component.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\iRenderer.h" />
@@ -179,6 +178,7 @@
     <ClInclude Include="src\rendererOGL.h" />
     <ClInclude Include="src\rendererSDL.h" />
     <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\ship.h" />
     <ClInclude Include="src\spriteComponent.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\timer.h" />
@@ -190,6 +190,7 @@
   <ItemGroup>
     <None Include="..\res\shaders\basic.frag" />
     <None Include="..\res\shaders\basic.vert" />
+    <None Include="..\res\shaders\transform.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

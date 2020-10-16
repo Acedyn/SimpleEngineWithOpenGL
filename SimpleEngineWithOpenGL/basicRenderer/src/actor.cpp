@@ -52,8 +52,10 @@ void Actor::update(float dt)
 {
 	if (state == Actor::ActorState::Active)
 	{
+		computeWorldTransform();
 		updateComponent(dt);
 		updateActor(dt);
+		computeWorldTransform();
 	}
 }
 

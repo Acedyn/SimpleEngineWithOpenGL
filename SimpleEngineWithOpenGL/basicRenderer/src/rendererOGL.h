@@ -30,6 +30,8 @@ private:
 	void drawSprites();
 	Shader* shader;
 
+	Matrix4 viewProj;
+
 	Window* window;
 	VertexArray* vertexArray;
 	SDL_GLContext context;

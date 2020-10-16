@@ -66,6 +66,10 @@ Texture Assets::loadTextureFromFile(IRenderer& renderer, const std::string& file
     {
         texture.loadSDL(dynamic_cast<RendererSDL&>(renderer), fileName);
     }
+    else if (renderer.type() == IRenderer::Type::OGL)
+    {
+        texture.loadOGL(dynamic_cast<RendererOGL&>(renderer), fileName);
+    }
     return texture;
 }
 

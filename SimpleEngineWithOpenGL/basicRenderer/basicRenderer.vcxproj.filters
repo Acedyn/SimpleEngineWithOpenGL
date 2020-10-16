@@ -63,13 +63,13 @@
     <ClCompile Include="src\shader.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\backgroundSpriteComponent.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\vector3.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\matrix.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ship.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,13 +125,13 @@
     <ClInclude Include="src\shader.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\backgroundSpriteComponent.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="src\vector3.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\matrix4.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ship.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -140,6 +140,9 @@
       <Filter>Fichiers de ressources</Filter>
     </None>
     <None Include="..\res\shaders\basic.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\res\shaders\transform.vert">
       <Filter>Fichiers de ressources</Filter>
     </None>
   </ItemGroup>
