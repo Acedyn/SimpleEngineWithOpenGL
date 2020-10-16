@@ -59,17 +59,19 @@ bool Texture::loadOGL(RendererOGL& rendererP, const std::string& fileNameP)
 	width = surf->w;
 	height = surf->h;
 
-	// Create texture from surface
-	//SDLTexture = SDL_CreateTextureFromSurface(renderer.toSDLRenderer(), surf);
-	SDL_FreeSurface(surf);
-	/*
-	if (!SDLTexture)
+	int format = 0;
+	if (surf->format->format == SDL_PIXELFORMAT_RGBA32)
 	{
-		Log::error(LogCategory::Render, "Failed to convert surface to texture for " + filename);
-		return false;
+		format = GL_RGBA;
 	}
-	*/
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, surf->pixels);
+	SDL_FreeSurface(surf);
+
 	Log::info("Loaded texture " + fileName);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	return true;
 }
 
