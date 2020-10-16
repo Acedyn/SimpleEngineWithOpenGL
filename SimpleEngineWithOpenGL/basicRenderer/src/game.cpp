@@ -73,6 +73,7 @@ void Game::update(float dt)
 	// Move pending actors to actors
 	for (auto pendingActor: pendingActors)
 	{
+		pendingActor->computeWorldTransform();
 		actors.emplace_back(pendingActor);
 	}
 	pendingActors.clear();

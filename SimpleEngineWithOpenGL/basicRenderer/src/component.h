@@ -15,6 +15,7 @@ public:
 
 	virtual void update(float dt);
 	virtual void processInput(const Uint8* keyState);
+	virtual void inUpdateWorldTransform() {}
 
 protected:
 	Actor& owner;
