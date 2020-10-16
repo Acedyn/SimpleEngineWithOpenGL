@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include "vector2.h"
+#include "vector3.h"
+#include "quaternion.h"
 #include "matrix4.h"
 #include <SDL_stdinc.h>
 
@@ -22,15 +24,15 @@ public:
 
 	Game& getGame() const { return game; }
 	const ActorState getState() const { return state; }
-	const Vector2 getPosition() const { return position; }
+	const Vector3 getPosition() const { return position; }
 	const float getScale() const { return scale; }
-	const float getRotation() const { return rotation; }
+	const Quaternion getRotation() const { return rotation; }
 	const Matrix4& getWorldTransform() const { return worldTransform; }
 
 	void setState(ActorState stateP);
-	void setPosition(Vector2 positionP);
+	void setPosition(Vector3 positionP);
 	void setScale(float scaleP);
-	void setRotation(float rotationP);
+	void setRotation(Quaternion rotationP);
 
 	void update(float dt);
 	void updateComponent(float dt);
@@ -42,14 +44,14 @@ public:
 	void processInput(const Uint8* keyState);
 	virtual void actorInput(const Uint8* keyState);
 
-	Vector2 getForward() const;
+	Vector3 getForward() const;
 
 private:
 	Game& game;
 	ActorState state;
-	Vector2 position;
+	Vector3 position;
 	float scale;
-	float rotation;
+	Quaternion rotation;
 	Matrix4 worldTransform;
 	bool mustRecomputeWorldTransform;
 

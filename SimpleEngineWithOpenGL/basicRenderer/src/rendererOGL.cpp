@@ -33,12 +33,15 @@ bool RendererOGL::initialize(Window& windowP)
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+	//Depth
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
 	// Enable double buffering
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	// Force OpenGL to use hardware acceleration
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
 	context = SDL_GL_CreateContext(windowP.getSDLWindow());
+
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
 	{
@@ -56,8 +59,7 @@ bool RendererOGL::initialize(Window& windowP)
 	}
 
 
-	vertexArray = new VertexArray(vertices, 4, indices, 6);
-	shader = &Assets::getShader("sprite");
+	vertexArray = new VertexArray(spriteVertices, 4, indices, 6);
 	return true;
 }
 
@@ -70,8 +72,8 @@ void RendererOGL::beginDraw()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	shader->use();
-	shader->setMatrix4("uViewProj", viewProj);
+	Assets::getShader("sprite").use();
+	Assets::getShader("sprite").setMatrix4("uViewProj", viewProj);
 	vertexArray->setActive();
 }
 
@@ -85,7 +87,8 @@ void RendererOGL::drawSprite(const Actor& actor, const class Texture& tex, Recta
 	Matrix4 scaleMat = Matrix4::createScale(static_cast<float>(tex.getWidth()), static_cast<float>(tex.getHeight()), 1.0f);
 	Matrix4 world = scaleMat * actor.getWorldTransform();
 	Matrix4 pixelTranslation = Matrix4::createTranslation(Vector3(-WINDOW_WIDTH / 2 - origin.x, -WINDOW_HEIGHT / 2 - origin.y, 0.0f));
-	shader->setMatrix4("uWorldTransform", world * pixelTranslation);
+	Assets::getShader("sprite").setMatrix4("uWorldTransform", world * pixelTranslation);
+	tex.setActive();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
 

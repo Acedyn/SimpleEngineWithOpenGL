@@ -6,9 +6,9 @@
 
 Actor::Actor() :
 	state(Actor::ActorState::Active),
-	position(Vector2::zero),
+	position(Vector3::zero),
 	scale(1.0f),
-	rotation(0.0f),
+	rotation(Quaternion::identity),
 	mustRecomputeWorldTransform(true),
 	game(Game::instance())
 {
@@ -30,7 +30,7 @@ void Actor::setState(ActorState stateP)
 	state = stateP;
 }
 
-void Actor::setPosition(Vector2 positionP)
+void Actor::setPosition(Vector3 positionP)
 {
 	position = positionP;
 	mustRecomputeWorldTransform = true;
@@ -42,7 +42,7 @@ void Actor::setScale(float scaleP)
 	mustRecomputeWorldTransform = true;
 }
 
-void Actor::setRotation(float rotationP)
+void Actor::setRotation(Quaternion rotationP)
 {
 	rotation = rotationP;
 	mustRecomputeWorldTransform = true;
@@ -98,9 +98,9 @@ void Actor::removeComponent(Component* component)
 	}
 }
 
-Vector2 Actor::getForward() const
+Vector3 Actor::getForward() const
 {
-	return Vector2(Maths::cos(Maths::toRadians(rotation)), Maths::sin(Maths::toRadians(rotation)));
+	return Vector3::transform(Vector3::unitX, rotation);
 }
 
 void Actor::processInput(const Uint8* keyState)
@@ -121,8 +121,8 @@ void Actor::computeWorldTransform()
 	{
 		mustRecomputeWorldTransform = false;
 		worldTransform = Matrix4::createScale(scale);
-		worldTransform *= Matrix4::createRotationZ(rotation);
-		worldTransform *= Matrix4::createTranslation(Vector3(position.x, position.y, 0.0f));
+		worldTransform *= Matrix4::createFromQuaternion(rotation);
+		worldTransform *= Matrix4::createTranslation(position);
 
 		for (auto component : components)
 		{

@@ -15,15 +15,12 @@ bool Game::initialize()
 void Game::load()
 {
 
-	Assets::loadTexture(renderer, "..\\res\\textures\\Ship.png", "ship");
-
-	Assets::loadShader("..\\res\\shaders\\basic.vert", "..\\res\\shaders\\basic.frag", "", "", "", "Basic");
-	Assets::loadShader("..\\res\\shaders\\transform.vert", "..\\res\\shaders\\basic.frag", "", "", "", "transform");
+	Assets::loadTexture(renderer, "..\\res\\textures\\HealphBar.png", "healthBar");
 	Assets::loadShader("..\\res\\shaders\\sprite.vert", "..\\res\\shaders\\sprite.frag", "", "", "", "sprite");
 
-	Ship* ship = new Ship();
-	ship->setPosition(Vector2{ 100, 300 });
-	
+	Actor* ui = new Actor();
+	ui->setPosition(Vector3(350.0f, 350.0f, 0.0f));
+	SpriteComponent* sc = new SpriteComponent(ui, Assets::getTexture("healthBar"));
 }
 
 void Game::processInput()
