@@ -1,9 +1,14 @@
 #include "assets.h"
 #include "log.h"
+#include "rapidjson/document.h"
+#include <iostream>
+#include <sstream>
+#include <fstream>
 #include <sstream>
 
 std::map<std::string, Texture> Assets::textures;
 std::map<std::string, Shader> Assets::shaders;
+std::map<std::string, Mesh> Assets::meshes;
 
 // Query the texture loading to the renderer and add it to the texture map
 Texture Assets::loadTexture(IRenderer& renderer, const std::string fileName, const std::string& name)
@@ -45,6 +50,23 @@ Shader& Assets::getShader(const std::string& name)
 	return shaders[name];
 }
 
+Mesh Assets::loadMesh(const std::string& fileName, const std::string& name)
+{
+    meshes[name] = loadMeshFromFile(fileName);
+    return meshes[name];
+}
+
+Mesh& Assets::getMesh(const std::string& name)
+{
+    if (meshes.find(name) == std::end(meshes))
+    {
+        std::ostringstream loadError;
+        loadError << "Mesh " << name << " does not exist in asset manager";
+        Log::error(LogCategory::Application, loadError.str());
+    }
+    return meshes[name];
+}
+
 void Assets::clear()
 {
 	for (auto iter : textures)
@@ -52,9 +74,17 @@ void Assets::clear()
 		iter.second.unload();
 	}
 	textures.clear();
-	for (auto iter : shaders)
-		iter.second.unload();
+    for (auto iter : shaders)
+    {
+        iter.second.unload();
+    }
 	shaders.clear();
+    for (auto iter : meshes)
+    {
+        iter.second.unload();
+    }
+    meshes.clear();
+
 }
 
 // Create a texture and link it to the renderer
@@ -140,4 +170,126 @@ Shader Assets::loadShaderFromFile(const std::string& vShaderFile, const std::str
         teShaderFile != "" ? teShaderCode : nullptr,
         gShaderFile != "" ? gShaderCode : nullptr);
     return shader;
+}
+
+Mesh Assets::loadMeshFromFile(const std::string& fileName)
+{
+    Mesh mesh;
+
+    std::ifstream file(fileName);
+    if (!file.is_open())
+    {
+        Log::error(LogCategory::Application, "File not found: Mesh " + fileName);
+    }
+
+    std::stringstream fileStream;
+    fileStream << file.rdbuf();
+    std::string contents = fileStream.str();
+    rapidjson::StringStream jsonStr(contents.c_str());
+    rapidjson::Document doc;
+    doc.ParseStream(jsonStr);
+
+    if (!doc.IsObject())
+    {
+        std::ostringstream s;
+        s << "Mesh " << fileName << " is not valid json";
+        Log::error(LogCategory::Application, s.str());
+    }
+
+    //mesh.setShaderName(doc["shader"].GetString());
+    // TEMPORARY REPLACEMENT
+    //////////////////////////////////////////////////THIS IS TEMPORARY/////////////////////////////////////////////////////////////////////
+    std::string shaderNameTemp = "basicShader";
+    mesh.setShaderName(shaderNameTemp);
+
+    // Skip the vertex format/shader for now
+    // (This is changed in a later chapter's code)
+    size_t vertSize = 8;
+
+    // Load textures
+    const rapidjson::Value& textures = doc["textures"];
+    if (!textures.IsArray() || textures.Size() < 1)
+    {
+        std::ostringstream s;
+        s << "Mesh " << fileName << " has no textures, there should be at least one";
+        Log::error(LogCategory::Application, s.str());
+    }
+
+    //mesh.setSpecularPower(static_cast<float>(doc["specularPower"].GetDouble()));
+
+    for (rapidjson::SizeType i = 0; i < textures.Size(); i++)
+    {
+        std::string texName = textures[i].GetString();
+        Texture& t = getTexture(texName);
+        mesh.addTexture(&t);
+    }
+
+    // Load in the vertices
+    const rapidjson::Value& vertsJson = doc["vertices"];
+    if (!vertsJson.IsArray() || vertsJson.Size() < 1)
+    {
+        std::ostringstream s;
+        s << "Mesh " << fileName << " has no vertices";
+        Log::error(LogCategory::Application, s.str());
+    }
+
+    std::vector<float> vertices;
+    vertices.reserve(vertsJson.Size() * vertSize);
+    float radius = 0.0f;
+    for (rapidjson::SizeType i = 0; i < vertsJson.Size(); i++)
+    {
+        // For now, just assume we have 8 elements
+        const rapidjson::Value& vert = vertsJson[i];
+        if (!vert.IsArray() || vert.Size() != 8)
+        {
+            std::ostringstream s;
+            s << "Unexpected vertex format for " << fileName;
+            Log::error(LogCategory::Application, s.str());
+        }
+
+        Vector3 pos(static_cast<float>(vert[0].GetDouble()), static_cast<float>(vert[1].GetDouble()), static_cast<float>(vert[2].GetDouble()));
+        radius = Maths::max(radius, pos.lengthSq());
+
+        // Add the floats
+        for (rapidjson::SizeType i = 0; i < vert.Size(); i++)
+        {
+            vertices.emplace_back(static_cast<float>(vert[i].GetDouble()));
+        }
+    }
+
+    // We were computing length squared earlier
+    mesh.setRadius(Maths::sqrt(radius));
+
+    // Load in the indices
+    const rapidjson::Value& indJson = doc["indices"];
+    if (!indJson.IsArray() || indJson.Size() < 1)
+    {
+        std::ostringstream s;
+        s << "Mesh " << fileName << " has no indices";
+        Log::error(LogCategory::Application, s.str());
+    }
+
+    std::vector<unsigned int> indices;
+    indices.reserve(indJson.Size() * 3.0);
+    for (rapidjson::SizeType i = 0; i < indJson.Size(); i++)
+    {
+        const rapidjson::Value& ind = indJson[i];
+        if (!ind.IsArray() || ind.Size() != 3)
+        {
+            std::ostringstream s;
+            s << "Invalid indices for " << fileName;
+            Log::error(LogCategory::Application, s.str());
+        }
+
+        indices.emplace_back(ind[0].GetUint());
+        indices.emplace_back(ind[1].GetUint());
+        indices.emplace_back(ind[2].GetUint());
+    }
+
+    // Now create a vertex array
+    mesh.setVertexArray(new VertexArray(vertices.data(), static_cast<unsigned int>(vertices.size()) / vertSize, indices.data(), static_cast<unsigned int>(indices.size())));
+
+    Log::info("Loaded mesh " + fileName);
+
+    return mesh;
 }

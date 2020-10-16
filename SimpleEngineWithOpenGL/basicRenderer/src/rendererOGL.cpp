@@ -4,6 +4,7 @@
 #include "vector2.h"
 #include "log.h"
 #include "spriteComponent.h"
+#include "meshComponent.h"
 #include "assets.h"
 #include "actor.h"
 
@@ -11,10 +12,12 @@
 
 RendererOGL::RendererOGL() :
 	window(nullptr),
-	vertexArray(nullptr),
+	spriteVertexArray(nullptr),
 	context(nullptr),
 	shader(nullptr),
-	viewProj(Matrix4::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT)) {}
+	spriteViewProj(Matrix4::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT)),
+	view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)),
+	projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT, 10.0f, 10000.0f)) {}
 
 RendererOGL::~RendererOGL()
 {
@@ -59,7 +62,7 @@ bool RendererOGL::initialize(Window& windowP)
 	}
 
 
-	vertexArray = new VertexArray(spriteVertices, 4, indices, 6);
+	spriteVertexArray = new VertexArray(spriteVertices, 4, indices, 6);
 	return true;
 }
 
@@ -68,26 +71,19 @@ void RendererOGL::beginDraw()
 	glClearColor(0.03f, 0.05f, 0.1f, 1.0f);
 	// Clear the color buffer
 	glClear(GL_COLOR_BUFFER_BIT);
-	// Enable alpha blending on the color buffer
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	Assets::getShader("sprite").use();
-	Assets::getShader("sprite").setMatrix4("uViewProj", viewProj);
-	vertexArray->setActive();
 }
 
 void RendererOGL::draw()
 {
-	drawSprites();
+	drawMeshes();
+	//drawSprites();
 }
 
 void RendererOGL::drawSprite(const Actor& actor, const class Texture& tex, Rectangle srcRect, Vector2 origin, Flip flip) const
 {
 	Matrix4 scaleMat = Matrix4::createScale(static_cast<float>(tex.getWidth()), static_cast<float>(tex.getHeight()), 1.0f);
 	Matrix4 world = scaleMat * actor.getWorldTransform();
-	//Matrix4 pixelTranslation = Matrix4::createTranslation(Vector3(-WINDOW_WIDTH / 2 - origin.x, -WINDOW_HEIGHT / 2 - origin.y, 0.0f));
-	Assets::getShader("sprite").setMatrix4("uWorldTransform", world /** pixelTranslation*/);
+	Assets::getShader("sprite").setMatrix4("uWorldTransform", world);
 	tex.setActive();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
@@ -100,7 +96,7 @@ void RendererOGL::endDraw()
 void RendererOGL::close()
 {
 	SDL_GL_DeleteContext(context);
-	delete vertexArray;
+	delete spriteVertexArray;
 }
 
 void RendererOGL::addSprite(SpriteComponent* sprite)
@@ -123,8 +119,46 @@ void RendererOGL::removeSprite(SpriteComponent* sprite)
 
 void RendererOGL::drawSprites()
 {
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+
+	Shader& spriteShader = Assets::getShader("sprite");
+	spriteShader.use();
+	spriteShader.setMatrix4("uViewProj", spriteViewProj);
+	spriteVertexArray->setActive();
+
 	for (auto sprite : sprites)
 	{
 		sprite->draw(*this);
 	}
+}
+
+void RendererOGL::drawMeshes()
+{
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
+	Assets::getShader("basicMesh").use();
+	Assets::getShader("basicMesh").setMatrix4("uViewProj", view * projection);
+	for (auto mc : meshes)
+	{
+		mc->draw(Assets::getShader("basicMesh"));
+	}
+}
+
+void RendererOGL::addMesh(MeshComponent* mesh)
+{
+	meshes.emplace_back(mesh);
+}
+
+void RendererOGL::removeMesh(MeshComponent* mesh)
+{
+	auto iter = std::find(begin(meshes), end(meshes), mesh);
+	meshes.erase(iter);
+}
+
+void RendererOGL::setViewMatrix(const Matrix4& viewP)
+{
+	view = viewP;
 }
