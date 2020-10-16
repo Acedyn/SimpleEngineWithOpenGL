@@ -78,6 +78,12 @@
     <ClCompile Include="src\meshComponent.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\moveComponent.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\vector2.h">
@@ -146,6 +152,12 @@
     <ClInclude Include="src\meshComponent.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="src\camera.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\moveComponent.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\shaders\basic.vert">
@@ -161,6 +173,12 @@
       <Filter>Fichiers de ressources</Filter>
     </None>
     <None Include="..\res\shaders\sprite.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\res\shaders\basicMesh.vert">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\res\shaders\basicMesh.frag">
       <Filter>Fichiers de ressources</Filter>
     </None>
   </ItemGroup>

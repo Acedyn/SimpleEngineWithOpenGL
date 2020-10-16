@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\assets.cpp" />
+    <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\component.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\log.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="src\matrix.cpp" />
     <ClCompile Include="src\mesh.cpp" />
     <ClCompile Include="src\meshComponent.cpp" />
+    <ClCompile Include="src\moveComponent.cpp" />
     <ClCompile Include="src\quaternion.cpp" />
     <ClCompile Include="src\rectangle.cpp" />
     <ClCompile Include="src\rendererOGL.cpp" />
@@ -170,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="src\actor.h" />
     <ClInclude Include="src\assets.h" />
+    <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\component.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\iRenderer.h" />
@@ -178,6 +181,7 @@
     <ClInclude Include="src\matrix4.h" />
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\meshComponent.h" />
+    <ClInclude Include="src\moveComponent.h" />
     <ClInclude Include="src\quaternion.h" />
     <ClInclude Include="src\rectangle.h" />
     <ClInclude Include="src\rendererOGL.h" />
@@ -194,6 +198,8 @@
   <ItemGroup>
     <None Include="..\res\shaders\basic.frag" />
     <None Include="..\res\shaders\basic.vert" />
+    <None Include="..\res\shaders\basicMesh.frag" />
+    <None Include="..\res\shaders\basicMesh.vert" />
     <None Include="..\res\shaders\sprite.frag" />
     <None Include="..\res\shaders\sprite.vert" />
     <None Include="..\res\shaders\transform.vert" />

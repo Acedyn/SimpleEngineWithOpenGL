@@ -197,10 +197,11 @@ Mesh Assets::loadMeshFromFile(const std::string& fileName)
     }
 
     //mesh.setShaderName(doc["shader"].GetString());
-    // TEMPORARY REPLACEMENT
     //////////////////////////////////////////////////THIS IS TEMPORARY/////////////////////////////////////////////////////////////////////
+    // TEMPORARY REPLACEMENT
     std::string shaderNameTemp = "basicShader";
     mesh.setShaderName(shaderNameTemp);
+    // TEMPORARY REPLACEMENT
 
     // Skip the vertex format/shader for now
     // (This is changed in a later chapter's code)
