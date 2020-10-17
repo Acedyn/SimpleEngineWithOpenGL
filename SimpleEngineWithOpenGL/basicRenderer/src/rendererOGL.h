@@ -3,6 +3,7 @@
 #include "vertexArray.h"
 #include "vector2.h"
 #include "shader.h"
+#include "directionalLight.h"
 
 #include <vector>
 
@@ -27,6 +28,11 @@ public:
 	void removeMesh(class MeshComponent* mesh);
 	void setViewMatrix(const Matrix4& viewP);
 
+	DirectionalLight& getDirectionalLight() { return dirLight; }
+
+	void setLightUniforms(Shader& shader);
+	void setAmbientLight(const Vector3& ambientP);
+
 	void close();
 	IRenderer::Type type() { return Type::OGL; }
 
@@ -43,6 +49,10 @@ private:
 	Matrix4 view;
 	// This it the projection matrix
 	Matrix4 projection;
+	// This is the ambient light intensity and color
+	Vector3 ambientLight;
+	// Struct containing the direction and the light color infos of the mesh
+	DirectionalLight dirLight;
 
 	std::vector<class SpriteComponent*> sprites;
 	std::vector<class MeshComponent*> meshes;

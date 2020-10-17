@@ -177,6 +177,7 @@
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\component.h" />
     <ClInclude Include="src\cube.h" />
+    <ClInclude Include="src\directionalLight.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\iRenderer.h" />
     <ClInclude Include="src\log.h" />
@@ -204,6 +205,8 @@
     <None Include="..\res\shaders\basic.vert" />
     <None Include="..\res\shaders\basicMesh.frag" />
     <None Include="..\res\shaders\basicMesh.vert" />
+    <None Include="..\res\shaders\Phong.frag" />
+    <None Include="..\res\shaders\Phong.vert" />
     <None Include="..\res\shaders\sprite.frag" />
     <None Include="..\res\shaders\sprite.vert" />
     <None Include="..\res\shaders\transform.vert" />

@@ -17,7 +17,9 @@ RendererOGL::RendererOGL() :
 	context(nullptr),
 	spriteViewProj(Matrix4::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT)),
 	view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)),
-	projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT, 10.0f, 10000.0f)) {}
+	projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT, 10.0f, 10000.0f)),
+	ambientLight(Vector3(1.0f, 1.0f, 1.0f)),
+	dirLight(DirectionalLight(Vector3::zero, Vector3::zero, Vector3::zero)) {}
 
 RendererOGL::~RendererOGL()
 {
@@ -102,6 +104,7 @@ void RendererOGL::drawSprite(const Actor& actor, const class Texture& tex, Recta
 
 void RendererOGL::endDraw()
 {
+	// SDL function to update the window with the result of the OpenGL rendering
 	SDL_GL_SwapWindow(window->getSDLWindow());
 }
 
@@ -181,4 +184,23 @@ void RendererOGL::removeMesh(MeshComponent* mesh)
 void RendererOGL::setViewMatrix(const Matrix4& viewP)
 {
 	view = viewP;
+}
+
+void RendererOGL::setLightUniforms(Shader& shader)
+{
+	Matrix4 invertedView = view;
+	invertedView.invert();
+	// Create a uniform variable that will contain the camera transorm
+	shader.setVector3f("uCameraPos", invertedView.getTranslation());
+	// Create a uniform variable that will constain the ambiant light infos
+	shader.setVector3f("uAmbiantLight", ambientLight);
+	// Create a uniform variable that will constain the directional light infos
+	shader.setVector3f("uDirLight.direction", dirLight.direction);
+	shader.setVector3f("uDirLight.diffuseColor", dirLight.diffuseColor);
+	shader.setVector3f("uDirLight.specColor", dirLight.specColor);
+}
+
+void RendererOGL::setAmbientLight(const Vector3& ambientP)
+{
+	ambientLight = ambientP;
 }

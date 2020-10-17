@@ -24,10 +24,15 @@ public:
 	void setShaderName(const std::string& shaderNameP) { shaderName = shaderNameP; }
 	void setRadius(float radiusP);
 
+	float getSpecularPower() const { return specularPower; }
+	void setSpecularPower(float specularPowerP);
+
 private:
 	// Stores all the textures of this mesh
 	std::vector<Texture*> textures;
 	class VertexArray* vertexArray;
 	std::string shaderName;
 	float radius; 
+	// This value set the intensity of the specular
+	float specularPower;
 };

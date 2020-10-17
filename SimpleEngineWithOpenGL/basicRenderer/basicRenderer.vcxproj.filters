@@ -170,6 +170,9 @@
     <ClInclude Include="src\plane.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="src\directionalLight.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\shaders\basic.vert">
@@ -191,6 +194,12 @@
       <Filter>Fichiers de ressources</Filter>
     </None>
     <None Include="..\res\shaders\basicMesh.frag">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\res\shaders\Phong.vert">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="..\res\shaders\Phong.frag">
       <Filter>Fichiers de ressources</Filter>
     </None>
   </ItemGroup>

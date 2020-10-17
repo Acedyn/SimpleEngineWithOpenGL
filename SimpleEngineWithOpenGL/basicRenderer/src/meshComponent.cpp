@@ -24,6 +24,8 @@ void MeshComponent::draw(Shader& shader)
 		Matrix4 wt = owner.getWorldTransform();
 		// Create a uniform variable that will contain the actor transform
 		shader.setMatrix4("uWorldTransform", wt);
+		// Create a unform constaining the specularPower info
+		shader.setFloat("uSpecPower", mesh->getSpecularPower());
 		// Get the texture of the mesh
 		Texture* t = mesh->getTexture(textureIndex);
 		// If there is a texture
