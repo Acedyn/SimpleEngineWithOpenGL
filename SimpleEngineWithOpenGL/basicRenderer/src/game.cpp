@@ -6,6 +6,8 @@
 #include "Assets.h"
 #include "cube.h"
 #include "sphere.h"
+#include <sstream>
+#include "log.h"
 
 bool Game::initialize()
 {
@@ -51,11 +53,6 @@ void Game::load()
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
 	a->setRotation(q);
 
-	// Same for an other Actor
-	Actor* b = new Sphere();
-	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
-	b->setScale(3.0f);
-
 	// Lights
 	renderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
 	DirectionalLight& dir = renderer.getDirectionalLight();
@@ -83,6 +80,13 @@ void Game::processInput()
 	}
 	// Keyboard state
 	const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
+	// Mouse state
+	int mousePositionX = 0;
+	int mousePositionY = 0;
+	const Uint32 mouseState = SDL_GetMouseState(&mousePositionX, &mousePositionY);
+	std::ostringstream error;
+	error << "PositionX : " << mousePositionX << " PositionY : " << mousePositionY << " " << static_cast<int>(mouseState);
+	Log::info(error.str());
 	// Escape: quit game
 	if (keyboardState[SDL_SCANCODE_ESCAPE])
 	{
@@ -94,6 +98,7 @@ void Game::processInput()
 	{
 		// Give to the actor the keyboard state
 		actor->processInput(keyboardState);
+		//actor->processInput(&mouseState);
 	}
 	isUpdatingActors = false;
 }
