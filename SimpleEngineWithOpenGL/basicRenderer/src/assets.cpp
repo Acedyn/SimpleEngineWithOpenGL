@@ -230,6 +230,7 @@ Mesh Assets::loadMeshFromFile(const std::string& fileName)
         s << "Mesh " << fileName << " has no textures, there should be at least one";
         Log::error(LogCategory::Application, s.str());
     }
+    mesh.setSpecularPower(static_cast<float>(doc["specularPower"].GetDouble()));
 
     // For each textures in the "textures" part of the json file
     for (rapidjson::SizeType i = 0; i < textures.Size(); i++)

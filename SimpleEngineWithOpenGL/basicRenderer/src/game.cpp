@@ -4,6 +4,8 @@
 #include "meshComponent.h"
 #include "Timer.h"
 #include "Assets.h"
+#include "cube.h"
+#include "sphere.h"
 
 bool Game::initialize()
 {
@@ -19,6 +21,7 @@ void Game::load()
 	// Load the shader and put it in the assets class
 	Assets::loadShader("../res/shaders/Sprite.vert", "../res/shaders/Sprite.frag", "", "", "", "Sprite");
 	Assets::loadShader("../res/shaders/BasicMesh.vert", "../res/shaders/BasicMesh.frag", "", "", "", "BasicMesh");
+	Assets::loadShader("../res/shaders/Phong.vert", "../res/shaders/Phong.frag", "", "", "", "Phong");
 
 	// Load the textures and put it in the assets class
 	Assets::loadTexture(renderer, "../res/textures/Default.png", "Default");
@@ -37,7 +40,7 @@ void Game::load()
 	camera = new Camera();
 
 	// Create an empty Actor
-	Actor* a = new Actor();
+	Actor* a = new Cube();
 	// Set its position to 300, 105, 0
 	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
 	// Set its scale to 100
@@ -47,17 +50,18 @@ void Game::load()
 	// Rotate the quaternion
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
 	a->setRotation(q);
-	// Create the meshComponent 
-	MeshComponent* mc = new MeshComponent(a);
-	// Assign it to the new Actor
-	mc->setMesh(Assets::getMesh("Mesh_Cube"));
 
 	// Same for an other Actor
-	Actor* b = new Actor();
+	Actor* b = new Sphere();
 	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
 	b->setScale(3.0f);
-	MeshComponent* mcb = new MeshComponent(b);
-	mcb->setMesh(Assets::getMesh("Mesh_Sphere"));
+
+	// Lights
+	renderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
+	DirectionalLight& dir = renderer.getDirectionalLight();
+	dir.direction = Vector3(0.0f, 0.707f, 0.707f);
+	dir.diffuseColor = Vector3(0.78f, 0.88f, 1.0f);
+	dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
 }
 
 void Game::processInput()

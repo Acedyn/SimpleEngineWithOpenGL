@@ -59,5 +59,10 @@ void main()
 	}
 
 	// Final color is texture color times phong light (alpha = 1)
-    outColor = texture(uTexture, fragTexCoord) * vec4(Phong, 1.0f);
+	vec4 tempColor = texture(uTexture, fragTexCoord) * vec4(Phong, 1.0f);
+	if(uAmbientLight != 5)
+	{
+		//tempColor = vec4(uAmbientLight, 1.0f);
+	}
+    outColor = tempColor;
 }

@@ -21,9 +21,7 @@ RendererOGL::RendererOGL() :
 	ambientLight(Vector3(1.0f, 1.0f, 1.0f)),
 	dirLight(DirectionalLight(Vector3::zero, Vector3::zero, Vector3::zero)) {}
 
-RendererOGL::~RendererOGL()
-{
-}
+RendererOGL::~RendererOGL() {}
 
 bool RendererOGL::initialize(Window& windowP)
 {
@@ -158,15 +156,16 @@ void RendererOGL::drawMeshes()
 	// Disable the blending between the frament color and the value in color buffer
 	glDisable(GL_BLEND);
 	// Bind the BasicMesh shader
-	Assets::getShader("BasicMesh").use();
+	Assets::getShader("Phong").use();
 	// Create a uniform variable (global variable used later in glsl programs)
 	// Set it to the transform matrix of the camera multiplied by the projection matrix
-	Assets::getShader("BasicMesh").setMatrix4("uViewProj", view * projection);
+	Assets::getShader("Phong").setMatrix4("uViewProj", view * projection);
+	setLightUniforms(Assets::getShader("Phong"));
 	// For each meshes
 	for (auto mc : meshes)
 	{
 		// Draw them with the shader basicMesh
-		mc->draw(Assets::getShader("BasicMesh"));
+		mc->draw(Assets::getShader("Phong"));
 	}
 }
 
@@ -193,7 +192,7 @@ void RendererOGL::setLightUniforms(Shader& shader)
 	// Create a uniform variable that will contain the camera transorm
 	shader.setVector3f("uCameraPos", invertedView.getTranslation());
 	// Create a uniform variable that will constain the ambiant light infos
-	shader.setVector3f("uAmbiantLight", ambientLight);
+	shader.setVector3f("uAmbientLight", ambientLight);
 	// Create a uniform variable that will constain the directional light infos
 	shader.setVector3f("uDirLight.direction", dirLight.direction);
 	shader.setVector3f("uDirLight.diffuseColor", dirLight.diffuseColor);
