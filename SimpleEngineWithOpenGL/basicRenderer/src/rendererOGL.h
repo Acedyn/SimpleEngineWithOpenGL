@@ -14,6 +14,7 @@ public:
 	RendererOGL(const RendererOGL&) = delete;
 	RendererOGL& operator=(const RendererOGL&) = delete;
 
+	// Initialization of the renderer called by the game class initialize() function
 	bool initialize(Window& window);
 	void beginDraw();
 	void draw();
@@ -33,12 +34,14 @@ private:
 	void drawSprites();
 	void drawMeshes();
 
-
+	// Pointer to the window class
 	Window* window;
 	VertexArray* spriteVertexArray;
 	SDL_GLContext context;
 	Matrix4 spriteViewProj;
+	// This is the matrix containing the camera transform
 	Matrix4 view;
+	// This it the projection matrix
 	Matrix4 projection;
 
 	std::vector<class SpriteComponent*> sprites;

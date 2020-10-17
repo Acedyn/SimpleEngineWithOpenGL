@@ -7,26 +7,29 @@
 #include "RendererOGL.h"
 #include "camera.h"
 
-using std::vector;
-
 class Game
 {
 public:
+	// This static function calls the constructor, since it is static it will return always the same instance
 	static Game& instance()
 	{
+
 		static Game inst;
 		return inst;
 	}
 
+	// Delete the assign and copy operator
 	Game(const Game&) = delete;
 	Game& operator=(const Game&) = delete;
 	Game(Game&&) = delete;
 	Game& operator=(Game&&) = delete;
 
 private:
+	// The constructor is private so only the instance() function can call it
 	Game() : isRunning(true), isUpdatingActors(false), camera(nullptr) {}
 
 public:
+
 	bool initialize();
 	void load();
 	void loop();
@@ -45,13 +48,15 @@ private:
 	void render();
 
 	bool isRunning;
+	// Window class that will be initialized at the begining
 	Window window;
+	// Renderer class that will be initialize at he begining
 	RendererOGL renderer;
 	Camera* camera;
 
 	bool isUpdatingActors;
-	vector<Actor*> actors;
-	vector<Actor*> pendingActors;
+	std::vector<Actor*> actors;
+	std::vector<Actor*> pendingActors;
 
 };
 

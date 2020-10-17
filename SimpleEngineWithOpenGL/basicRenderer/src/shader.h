@@ -29,6 +29,7 @@ public:
 	Shader& use();
 
 	// Compiles the shader from given source code
+	// Called by the Asset class when a shader is loaded
 	void compile(
 		const GLchar* vertexSource,
 		const GLchar* fragmentSource,
@@ -57,6 +58,7 @@ private:
 	GLuint tes;
 	GLuint gs;
 
+	// Called by compile()
 	void compileVertexShader(const GLchar* vertexSource);
 	void compileFragmentShader(const GLchar* fragmentSource);
 	bool compileTessControlShader(const GLchar* tessControlSource);

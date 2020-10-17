@@ -10,6 +10,7 @@
 
 #include <SDL_image.h>
 
+// Constructor assign the default values
 RendererOGL::RendererOGL() :
 	window(nullptr),
 	spriteVertexArray(nullptr),
@@ -24,44 +25,56 @@ RendererOGL::~RendererOGL()
 
 bool RendererOGL::initialize(Window& windowP)
 {
+	// Assign the window to the given one
 	window = &windowP;
 
 	// Set OpenGL attributes
+	// Set the OpenGl profile to CORE wich mean that the deprecated function will be disabled
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	// Set the minimum and maximum version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	// Request a color buffer with 8-bits per RGBA channel
+	// Set the range of the red channel to 8 bit (0 to 255)
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+	// Set the range of the gree channel to 8 bit (0 to 255)
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+	// Set the range of the blue channel to 8 bit (0 to 255)
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+	// Set the range of the alpha channel to 8 bit (0 to 255)
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
 	//Depth
+	// Set the range of the Z channel to 8 bit (0 to 255)
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
 	// Enable double buffering
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	// Force OpenGL to use hardware acceleration
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-	context = SDL_GL_CreateContext(windowP.getSDLWindow());
+	// Create a OpenGL context and link it to the window
+	context = SDL_GL_CreateContext(window->getSDLWindow());
 
+	// glew variable to set to true for some reason
 	glewExperimental = GL_TRUE;
+	// Call glewInit to initialize glew
 	if (glewInit() != GLEW_OK)
 	{
+		// If glue initialization was unsuccessfull log error
 		Log::error(LogCategory::Video, "Failed to initialize GLEW.");
 		return false;
 	}
 
 	// On some platforms, GLEW will emit a benign error code, so clear it
 	glGetError();
-
+	
+	// Initialize the SDL_image module with PNG support
 	if (IMG_Init(IMG_INIT_PNG) == 0)
 	{
+		// If SDL_image initialization was unsuccesfull log error
 		Log::error(LogCategory::Video, "Unable to initialize SDL_image");
 		return false;
 	}
 
-
-	spriteVertexArray = new VertexArray(spriteVertices, 4, indices, 6);
 	return true;
 }
 
@@ -136,12 +149,20 @@ void RendererOGL::drawSprites()
 
 void RendererOGL::drawMeshes()
 {
+	// Parameter to enable comparison of the depht buffer
+	// The depht buffer is used to set wich pixel is the closer one
 	glEnable(GL_DEPTH_TEST);
+	// Disable the blending between the frament color and the value in color buffer
 	glDisable(GL_BLEND);
+	// Bind the BasicMesh shader
 	Assets::getShader("BasicMesh").use();
+	// Create a uniform variable (global variable used later in glsl programs)
+	// Set it to the transform matrix of the camera multiplied by the projection matrix
 	Assets::getShader("BasicMesh").setMatrix4("uViewProj", view * projection);
+	// For each meshes
 	for (auto mc : meshes)
 	{
+		// Draw them with the shader basicMesh
 		mc->draw(Assets::getShader("BasicMesh"));
 	}
 }

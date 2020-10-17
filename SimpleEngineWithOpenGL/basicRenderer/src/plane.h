@@ -4,4 +4,4 @@
 class Plane : public Actor
 {
 	Plane();
-}
+};

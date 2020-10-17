@@ -1,5 +1,7 @@
 #pragma once
 
+// Array of vertices for a square
+// Depracated since we are using files now
 constexpr float spriteVertices[] = {
 	-0.5f,  0.5f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, // top left
 	 0.5f,  0.5f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, // top right
@@ -7,6 +9,8 @@ constexpr float spriteVertices[] = {
 	-0.5f, -0.5f, 0.f, 0.f, 0.f, 0.f, 0.f, 1.f  // bottom left
 };
 
+// Array of indices for a square
+// Depracated since we are using files now
 constexpr unsigned int indices[] = {
 	0, 1, 2,
 	2, 3, 0

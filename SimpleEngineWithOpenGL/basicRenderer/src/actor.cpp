@@ -105,10 +105,13 @@ Vector3 Actor::getForward() const
 
 void Actor::processInput(const Uint8* keyState)
 {
+	// If the actor is active
 	if (state == Actor::ActorState::Active)
 	{
+		// For each components
 		for (auto component : components)
 		{
+			// Call process input
 			component->processInput(keyState);
 		}
 		actorInput(keyState);

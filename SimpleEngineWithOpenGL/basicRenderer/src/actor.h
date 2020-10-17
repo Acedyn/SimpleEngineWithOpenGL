@@ -41,6 +41,7 @@ public:
 	void removeComponent(Component* component);
 	void computeWorldTransform();
 
+	// Call the processInput of all the components
 	void processInput(const Uint8* keyState);
 	virtual void actorInput(const Uint8* keyState);
 

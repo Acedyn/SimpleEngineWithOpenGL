@@ -12,6 +12,7 @@ void Shader::unload()
 
 Shader& Shader::use()
 {
+    // Bind the program so it will be used for drawing
     glUseProgram(id);
     return *this;
 }
@@ -19,27 +20,37 @@ Shader& Shader::use()
 void Shader::compile(const GLchar* vertexSource, const GLchar* fragmentSource,
     const GLchar* tessControlSource, const GLchar* tessEvalSource, const GLchar* geometrySource)
 {
+    // Create and compile the vertex shader
     compileVertexShader(vertexSource);
     bool tessExists = compileTessControlShader(tessControlSource);
     tessExists &= compileTessEvalShader(tessEvalSource);
     bool gsExists = compileGeometryShader(geometrySource);
+    // Create and compile the fragment shader
     compileFragmentShader(fragmentSource);
+    // Link all the shaders into a usable program
     createShaderProgram(tessExists, gsExists);
+    // Print infos about the created program
     printAllParams(id);
 }
 
 void Shader::compileVertexShader(const GLchar* vertex_source)
 {
+    // Creathe a vertex shader and store its ID in vs
     vs = glCreateShader(GL_VERTEX_SHADER);
+    // Assign the shader code the the created shader
     glShaderSource(vs, 1, &vertex_source, NULL);
+    // Compile the shader
     glCompileShader(vs);
     checkShaderErrors(vs, "vertex");
 }
 
 void Shader::compileFragmentShader(const GLchar* fragment_source)
 {
+    // Creathe a fragment shader and store its ID in fs
     fs = glCreateShader(GL_FRAGMENT_SHADER);
+    // Assign the shader code the the created shader
     glShaderSource(fs, 1, &fragment_source, NULL);
+    // Compile the shader
     glCompileShader(fs);
     checkShaderErrors(fs, "fragment");
 }
@@ -49,8 +60,11 @@ bool Shader::compileTessControlShader(const GLchar* tessControlSource) {
         return false;
     }
 
+    // Creathe a tess control shader and store its ID in tcs
     tcs = glCreateShader(GL_TESS_CONTROL_SHADER);
+    // Assign the shader code the the created shader
     glShaderSource(tcs, 1, &tessControlSource, NULL);
+    // Compile the shader
     glCompileShader(tcs);
     checkShaderErrors(tcs, "tessellation control");
     return true;
@@ -61,8 +75,11 @@ bool Shader::compileTessEvalShader(const GLchar* tessEvalSource) {
         return false;
     }
 
+    // Creathe a tess eval shader and store its ID in tes
     tes = glCreateShader(GL_TESS_EVALUATION_SHADER);
+    // Assign the shader code the the created shader
     glShaderSource(tes, 1, &tessEvalSource, NULL);
+    // Compile the shader
     glCompileShader(tes);
     checkShaderErrors(tes, "tessellation evaluation");
     return true;
@@ -75,8 +92,11 @@ bool Shader::compileGeometryShader(const GLchar* geometry_source)
         return false;
     }
 
+    // Creathe a geometry shader and store its ID in gs
     gs = glCreateShader(GL_GEOMETRY_SHADER);
+    // Assign the shader code the the created shader
     glShaderSource(gs, 1, &geometry_source, NULL);
+    // Compile the shader
     glCompileShader(gs);
     checkShaderErrors(gs, "geometry");
 
@@ -87,17 +107,22 @@ void Shader::createShaderProgram(bool tessShadersExist, bool geometryShaderExist
 {
     // Create program
     id = glCreateProgram();
+    // Attach the fragment shader to the program
     glAttachShader(id, fs);
+    // If we have a tess shader we attach it to the program
     if (tessShadersExist)
     {
         glAttachShader(id, tcs);
         glAttachShader(id, tes);
     }
+    // If we have a geometry shader we attach it to the programm
     if (geometryShaderExists)
     {
         glAttachShader(id, gs);
     }
+    // Attach the vertex shader to the program
     glAttachShader(id, vs);
+    // Link the shaders of the given program into one usable program
     glLinkProgram(id);
 
     // Check for linking error
@@ -117,7 +142,7 @@ void Shader::createShaderProgram(bool tessShadersExist, bool geometryShaderExist
         Log::error(LogCategory::Render, s.str());
     }
 
-    // Delete shaders for they are no longer used
+    // Delete shaders for they are no longer used to clear the memory
     glDeleteShader(vs);
     if (tessShadersExist)
     {
@@ -168,6 +193,9 @@ void Shader::setVector4f(const GLchar* name, const Vector4& value)
 */
 void Shader::setMatrix4(const GLchar* name, const Matrix4& matrix)
 {
+    // Set the matrix 4 Uniform variable  to the given one
+    // Uniforms variable are gloab variables usable in the glsl program
+    // GL_True is to ask openGL to transpose the matrix (invert the collumns and the lines) because this convention can varry
     glUniformMatrix4fv(glGetUniformLocation(id, name), 1, GL_TRUE, matrix.getAsFloatPtr());
 }
 
@@ -249,16 +277,19 @@ void Shader::printAllParams(GLuint id)
     s << "Shader programme " << id << " info: ";
     Log::info(s.str());
     int params = -1;
+    // Get the link status of the created program
     glGetProgramiv(id, GL_LINK_STATUS, &params);
     s.str("");
     s << "GL_LINK_STATUS = " << params;
     Log::info(s.str());
 
+    // Get the attach shaders of the created program
     glGetProgramiv(id, GL_ATTACHED_SHADERS, &params);
     s.str("");
     s << "GL_ATTACHED_SHADERS = " << params;
     Log::info(s.str());
 
+    // Get the active attributes of the created program
     glGetProgramiv(id, GL_ACTIVE_ATTRIBUTES, &params);
     s.str("");
     s << "GL_ACTIVE_ATTRIBUTES = " << params;
@@ -292,6 +323,7 @@ void Shader::printAllParams(GLuint id)
         }
     }
 
+    // Get the active uniforms of the created program
     glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &params);
     s.str("");
     s << "GL_ACTIVE_UNIFORMS = " << params;

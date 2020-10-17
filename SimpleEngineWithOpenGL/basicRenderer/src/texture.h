@@ -9,9 +9,10 @@ public:
 	~Texture();
 
 	void unload();
+	// Called by Assets::loadTextureFromFile to create a OpenGL texture
 	bool loadOGL(RendererOGL& rendererP, const std::string& filenameP);
-	//inline SDL_Texture* toSDLTexture() const { return SDLTexture; }
 	void updateInfo(int& widthOut, int& heightOut);
+	// Bind the texture so it will be the one that OpenGL will use
 	void setActive() const;
 
 	inline int getWidth() const { return width; }

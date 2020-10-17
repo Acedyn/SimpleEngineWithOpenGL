@@ -2,6 +2,7 @@
 #include "window.h"
 #include "vector2.h"
 
+// This interface class is used as a common base for OGL ans SDL renderers
 class IRenderer
 {
 public:
@@ -16,6 +17,7 @@ public:
 
 	virtual ~IRenderer() {};
 
+	// Initialization of the renderer called by the game class initialize() function
 	virtual bool initialize(Window& window) = 0;
 	virtual void beginDraw() = 0;
 	virtual void draw() = 0;

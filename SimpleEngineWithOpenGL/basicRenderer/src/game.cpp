@@ -7,16 +7,20 @@
 
 bool Game::initialize()
 {
+	// Initialize the window class
 	bool isWindowInit = window.initialize();
+	// Initialize the renderer class to the window
 	bool isRendererInit = renderer.initialize(window);
 	return isWindowInit && isRendererInit; // Return bool && bool && bool ...to detect error
 }
 
 void Game::load()
 {
+	// Load the shader and put it in the assets class
 	Assets::loadShader("../res/shaders/Sprite.vert", "../res/shaders/Sprite.frag", "", "", "", "Sprite");
 	Assets::loadShader("../res/shaders/BasicMesh.vert", "../res/shaders/BasicMesh.frag", "", "", "", "BasicMesh");
 
+	// Load the textures and put it in the assets class
 	Assets::loadTexture(renderer, "../res/textures/Default.png", "Default");
 	Assets::loadTexture(renderer, "../res/textures/Cube.png", "Cube");
 	Assets::loadTexture(renderer, "../res/textures/HealthBar.png", "HealthBar");
@@ -24,21 +28,31 @@ void Game::load()
 	Assets::loadTexture(renderer, "../res/textures/Radar.png", "Radar");
 	Assets::loadTexture(renderer, "../res/textures/Sphere.png", "Sphere");
 
+	// Load the meshes and put it in the assets class
 	Assets::loadMesh("../res/meshes/Cube.gpmesh", "Mesh_Cube");
 	Assets::loadMesh("../res/meshes/Plane.gpmesh", "Mesh_Plane");
 	Assets::loadMesh("../res/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
+	// Create a camera instance
 	camera = new Camera();
 
+	// Create an empty Actor
 	Actor* a = new Actor();
+	// Set its position to 300, 105, 0
 	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
+	// Set its scale to 100
 	a->setScale(100.0f);
+	// Create a quaternion
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
+	// Rotate the quaternion
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
 	a->setRotation(q);
+	// Create the meshComponent 
 	MeshComponent* mc = new MeshComponent(a);
+	// Assign it to the new Actor
 	mc->setMesh(Assets::getMesh("Mesh_Cube"));
 
+	// Same for an other Actor
 	Actor* b = new Actor();
 	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
 	b->setScale(3.0f);
@@ -48,13 +62,17 @@ void Game::load()
 
 void Game::processInput()
 {
-	// SDL Event
+	// Create and SDL_Event
 	SDL_Event event;
+	// SDL_PollEvent will check if there is some event waiting to be executed
+	// If there is some it will put it in SDL_Event
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
 		{
+		// If the event is of type SDL_QUIT
 		case SDL_QUIT:
+			// Stop the game
 			isRunning = false;
 			break;
 		}
@@ -70,6 +88,7 @@ void Game::processInput()
 	isUpdatingActors = true;
 	for (auto actor : actors)
 	{
+		// Give to the actor the keyboard state
 		actor->processInput(keyboardState);
 	}
 	isUpdatingActors = false;
@@ -94,7 +113,7 @@ void Game::update(float dt)
 	pendingActors.clear();
 
 	// Delete dead actors
-	vector<Actor*> deadActors;
+	std::vector<Actor*> deadActors;
 	for (auto actor : actors)
 	{
 		if (actor->getState() == Actor::ActorState::Dead)

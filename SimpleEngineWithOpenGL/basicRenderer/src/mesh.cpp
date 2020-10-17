@@ -1,6 +1,7 @@
 #include "mesh.h"
 #include "vertexArray.h"
 
+// Constructor initialize the values
 Mesh::Mesh() :
 	vertexArray(nullptr),
 	shaderName(""),
@@ -12,11 +13,6 @@ void Mesh::unload()
 {
 	delete vertexArray;
 	vertexArray = nullptr;
-}
-
-void Mesh::addTexture(Texture* texture)
-{
-	textures.emplace_back(texture);
 }
 
 Texture* Mesh::getTexture(int index)
@@ -34,11 +30,6 @@ Texture* Mesh::getTexture(int index)
 void Mesh::setVertexArray(VertexArray* vertexArrayP)
 {
 	vertexArray = vertexArrayP;
-}
-
-void Mesh::setShaderName(const std::string& shaderNameP)
-{
-	shaderName = shaderNameP;
 }
 
 void Mesh::setRadius(float radiusP)
