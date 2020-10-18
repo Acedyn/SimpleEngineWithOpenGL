@@ -3,6 +3,8 @@
 #include "component.h"
 #include "maths.h"
 #include <algorithm>
+#include "log.h"
+#include <ostream>
 
 Actor::Actor() :
 	state(Actor::ActorState::Active),
@@ -57,6 +59,7 @@ void Actor::update(float dt)
 		updateActor(dt);
 		computeWorldTransform();
 	}
+
 }
 
 void Actor::updateComponent(float dt)
@@ -103,7 +106,12 @@ Vector3 Actor::getForward() const
 	return Vector3::transform(Vector3::unitX, rotation);
 }
 
-void Actor::processInput(const Uint8* keyState)
+Vector3 Actor::getSide() const
+{
+	return Vector3::transform(Vector3::unitY, rotation);
+}
+
+void Actor::processInput(const Uint8* keyState, const Uint32* mouseState, int mousePositionX, int mousePositionY)
 {
 	// If the actor is active
 	if (state == Actor::ActorState::Active)
@@ -112,9 +120,9 @@ void Actor::processInput(const Uint8* keyState)
 		for (auto component : components)
 		{
 			// Call process input
-			component->processInput(keyState);
+			component->processInput(keyState, mouseState, mousePositionX, mousePositionY);
 		}
-		actorInput(keyState);
+		actorInput(keyState, mouseState, mousePositionX, mousePositionY);
 	}
 }
 
@@ -134,4 +142,4 @@ void Actor::computeWorldTransform()
 	}
 }
 
-void Actor::actorInput(const Uint8* keyState) {}
+void Actor::actorInput(const Uint8* keys, const Uint32* mouseState, int mousePositionX, int mousePositionY) {}

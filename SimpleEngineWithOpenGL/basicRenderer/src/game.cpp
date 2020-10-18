@@ -84,9 +84,6 @@ void Game::processInput()
 	int mousePositionX = 0;
 	int mousePositionY = 0;
 	const Uint32 mouseState = SDL_GetMouseState(&mousePositionX, &mousePositionY);
-	std::ostringstream error;
-	error << "PositionX : " << mousePositionX << " PositionY : " << mousePositionY << " " << static_cast<int>(mouseState);
-	Log::info(error.str());
 	// Escape: quit game
 	if (keyboardState[SDL_SCANCODE_ESCAPE])
 	{
@@ -97,8 +94,7 @@ void Game::processInput()
 	for (auto actor : actors)
 	{
 		// Give to the actor the keyboard state
-		actor->processInput(keyboardState);
-		//actor->processInput(&mouseState);
+		actor->processInput(keyboardState, &mouseState, mousePositionX, mousePositionY);
 	}
 	isUpdatingActors = false;
 }

@@ -24,6 +24,8 @@ public:
 	Game(Game&&) = delete;
 	Game& operator=(Game&&) = delete;
 
+	Camera* getCamera() { return camera; }
+
 private:
 	// The constructor is private so only the instance() function can call it
 	Game() : isRunning(true), isUpdatingActors(false), camera(nullptr) {}

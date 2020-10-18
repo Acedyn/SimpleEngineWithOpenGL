@@ -42,10 +42,11 @@ public:
 	void computeWorldTransform();
 
 	// Call the processInput of all the components
-	void processInput(const Uint8* keyState);
-	virtual void actorInput(const Uint8* keyState);
+	void processInput(const Uint8* keyState, const Uint32* mouseState, int mousePositionX, int mousePositionY);
+	virtual void actorInput(const Uint8* keys, const Uint32* mouseState, int mousePositionX, int mousePositionY);
 
 	Vector3 getForward() const;
+	Vector3 getSide() const;
 
 private:
 	Game& game;

@@ -14,7 +14,7 @@ public:
 	int getUpdateOrder() const { return updateOrder; }
 
 	virtual void update(float dt);
-	virtual void processInput(const Uint8* keyState);
+	virtual void processInput(const Uint8* keyState, const Uint32* mouseState, int mousePositionX, int mousePositionY);
 	virtual void onUpdateWorldTransform() {}
 
 protected:

@@ -18,4 +18,4 @@ void Component::update(float dt)
 
 }
 
-void Component::processInput(const Uint8* keyState) {}
+void Component::processInput(const Uint8* keyState, const Uint32* mouseState, int mousePositionX, int mousePositionY) {}
