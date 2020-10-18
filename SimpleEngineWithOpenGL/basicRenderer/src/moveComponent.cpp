@@ -3,6 +3,7 @@
 #include "actor.h"
 #include "window.h"
 #include "log.h"
+#include "vector3.h"
 #include <sstream>
 
 MoveComponent::MoveComponent(Actor* ownerP, int updateOrderP)
@@ -10,7 +11,9 @@ MoveComponent::MoveComponent(Actor* ownerP, int updateOrderP)
 	forwardSpeed(0.0f),
 	sideSpeed(0.0f),
 	yawSpeed(0.0f),
-	pitchSpeed(0.0f)
+	pitchSpeed(0.0f),
+	arbitraryAngle(Vector3::unitX),
+	arbitrarySpeed(0.0f)
 {
 
 }
@@ -35,6 +38,12 @@ void MoveComponent::setPitchSpeed(float pitchSpeedP)
 	pitchSpeed = pitchSpeedP;
 }
 
+void MoveComponent::setArbitraryAngleSpeed(Vector3 arbitraryAngleP, float arbitrarySpeedP)
+{
+	arbitraryAngle = arbitraryAngleP;
+	arbitrarySpeed = arbitrarySpeedP;
+}
+
 void MoveComponent::update(float dt)
 {
 	if (!Maths::nearZero(yawSpeed))
@@ -50,6 +59,15 @@ void MoveComponent::update(float dt)
 		Quaternion newRotation = owner.getRotation();
 		float angle = pitchSpeed * dt;
 		Quaternion increment(Vector3::unitY, angle);
+		newRotation = Quaternion::concatenate(newRotation, increment);
+		owner.setRotation(newRotation);
+	}
+	if (!Maths::nearZero(arbitrarySpeed))
+	{
+		arbitraryAngle.normalize();
+		Quaternion newRotation = owner.getRotation();
+		float angle = arbitrarySpeed * dt;
+		Quaternion increment(arbitraryAngle, angle);
 		newRotation = Quaternion::concatenate(newRotation, increment);
 		owner.setRotation(newRotation);
 	}

@@ -17,6 +17,7 @@ public:
 	void setSideSpeed(float sideSpeedP);
 	void setYawSpeed(float yawSpeedP);
 	void setPitchSpeed(float pitchSpeedP);
+	void setArbitraryAngleSpeed(Vector3 arbitraryAngleP, float arbitrarySpeedP);
 
 	void update(float dt) override;
 
@@ -26,4 +27,6 @@ private:
 	float sideSpeed;
 	float yawSpeed;
 	float pitchSpeed;
+	Vector3 arbitraryAngle;
+	float arbitrarySpeed;
 };

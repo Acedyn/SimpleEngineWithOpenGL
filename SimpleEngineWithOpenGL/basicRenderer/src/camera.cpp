@@ -37,11 +37,11 @@ void Camera::actorInput(const Uint8* keys, const Uint32* mouseState, int mousePo
 	}
 	if (keys[SDL_SCANCODE_A])
 	{
-		sideSpeed -= 300.0f;
+		yawSpeed -= Maths::twoPi;
 	}
 	if (keys[SDL_SCANCODE_D])
 	{
-		sideSpeed += 300.0f;
+		yawSpeed += Maths::twoPi;
 	}
 	/*if (keys[SDL_SCANCODE_UP])
 	{

@@ -6,6 +6,8 @@
 #include "maths.h"
 #include <sstream>
 #include "log.h"
+#include "matrix4.h"
+#include "vector2.h"
 
 Cube::Cube() :
 	Actor(),
@@ -86,10 +88,10 @@ void Cube::actorInput(const Uint8* keys, const Uint32* mouseState, int mousePosi
 
 void Cube::updateActor(float dt)
 {
-	Vector3 cameraForward = getGame().getCamera()->getForward();
-	Vector3 cameraSide = getGame().getCamera()->getSide();
-	Vector3 cameraUp = Vector3::cross(cameraForward, cameraSide);
-	float yawSpeed = grabDirection.x*0.2;
-	mv->setYawSpeed(yawSpeed);
+	Quaternion cameraRotation = getGame().getCamera()->getRotation();
+	Vector3 grabRotation = Vector3::transform(Vector3(0, grabDirection.y, grabDirection.x), cameraRotation);
+	grabRotation.normalize();
+	float rotationSpeed = grabDirection.lenght()*0.2;
+	mv->setArbitraryAngleSpeed(grabRotation, rotationSpeed);
 
 }
