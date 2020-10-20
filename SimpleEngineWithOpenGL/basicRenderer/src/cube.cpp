@@ -25,44 +25,6 @@ Cube::Cube() :
 void Cube::actorInput(const Uint8* keys, const Uint32* mouseState, int mousePositionX, int mousePositionY)
 {
 	int mouseButton = static_cast<int>(*mouseState);
-	float forwardSpeed = 0.0f;
-	float sideSpeed = 0.0f;
-	float yawSpeed = 0.0f;
-	float pitchSpeed = 0.0f;
-	// wasd movement
-	/*if (keys[SDL_SCANCODE_W])
-	{
-		forwardSpeed += 300.0f;
-	}
-	if (keys[SDL_SCANCODE_S])
-	{
-		forwardSpeed -= 300.0f;
-	}
-	if (keys[SDL_SCANCODE_A])
-	{
-		sideSpeed -= 300.0f;
-	}
-	if (keys[SDL_SCANCODE_D])
-	{
-		sideSpeed += 300.0f;
-	}*/
-	if (keys[SDL_SCANCODE_UP])
-	{
-		pitchSpeed -= Maths::twoPi;
-	}
-	if (keys[SDL_SCANCODE_DOWN])
-	{
-		pitchSpeed += Maths::twoPi;
-	}
-	if (keys[SDL_SCANCODE_LEFT])
-	{
-		yawSpeed -= Maths::twoPi;
-	}
-	if (keys[SDL_SCANCODE_RIGHT])
-	{
-		yawSpeed += Maths::twoPi;
-	}
-
 
 	if (mouseButton == 1)
 	{
@@ -73,11 +35,6 @@ void Cube::actorInput(const Uint8* keys, const Uint32* mouseState, int mousePosi
 		}
 		mousePosition = currentMousePosition;
 		grabbing = 1;
-		std::ostringstream logInfo;
-		logInfo << "currentMousePosition : " << currentMousePosition.x << " " << currentMousePosition.y;
-		logInfo << " - mousePosition : " << mousePosition.x << " " << mousePosition.y;
-		logInfo << " = grabDirection : " << grabDirection.x << " " << grabDirection.y;
-		Log::info(logInfo.str());
 	}
 	else
 	{
